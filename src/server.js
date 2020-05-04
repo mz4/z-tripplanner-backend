@@ -17,7 +17,7 @@ import { execute, subscribe } from 'graphql'
 import { createServer, Server } from 'http'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
 
-const WS_PORT = 3030;
+const WS_PORT = 8080;
 
 export const app = express()
 
