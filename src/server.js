@@ -17,7 +17,7 @@ import { execute, subscribe } from 'graphql'
 import { createServer, Server } from 'http'
 import { SubscriptionServer } from 'subscriptions-transport-ws'
 
-const WS_PORT = 8080;
+const WS_PORT = 3030;
 
 export const app = express()
 
@@ -27,6 +27,7 @@ app.use('*', cors())
 app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
+app.use(express.static('public'));
 
 app.post('/signup', signup)
 app.post('/signin', signin)
@@ -42,13 +43,12 @@ app.use('/graphql', graphqlHTTP({
 }));
 
 app.get('/', (req, res) => {
-  res.redirect('/graphql');
+  res.send('Hola!');
 });
 
 const server = createServer(app);
 
 server.listen(WS_PORT, () => {
-  console.log(`GraphQL Server is now running on http://localhost:${WS_PORT}`);
   new SubscriptionServer({
     execute,
     subscribe,
@@ -73,6 +73,3 @@ export const start = async () => {
     console.error(e)
   }
 }
-
-console.log(`GraphQL Server is now running on http://localhost:${WS_PORT}`);
-console.log(`Subscriptions are running on ws://localhost:${WS_PORT}/subscriptions`);
