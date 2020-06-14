@@ -18,11 +18,14 @@ export const getOne = model => async (req, res) => {
 
 export const getMany = model => async (req, res) => {
   try {
+
     const docs = await model
       .find({ createdBy: req.user._id })
       .lean()
       .exec()
 
+    console.log('get trips!!!!!!!!')
+    console.log(req.user._id)
     res.status(200).json({ docs })
   } catch (e) {
     console.error(e)

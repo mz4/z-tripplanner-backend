@@ -27,7 +27,8 @@ app.use('*', cors())
 app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
-app.use(express.static('public'));
+
+app.use(express.static('build'));
 
 app.post('/signup', signup)
 app.post('/signin', signin)
@@ -68,7 +69,7 @@ server.listen(WS_PORT, () => {
 export const start = async () => {
   try {
     await connect()
-    app.listen(3000, () => console.log("Running on localhost: 3000"))
+    app.listen(config.port, () => console.log("Running on localhost: 3000"))
   } catch (e) {
     console.error(e)
   }

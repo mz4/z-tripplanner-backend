@@ -47,11 +47,6 @@ const subscriptionTrips = new GraphQLObjectType({
       type: TripType,
       subscribe: () => pubsub.asyncIterator('deleteTrip'),
       resolve: Trip,
-    },
-    toggleTrip: {
-      type: TripType,
-      subscribe: () => pubsub.asyncIterator('toggleTrip'),
-      resolve: Trip,
     }
   }
 })
@@ -78,6 +73,7 @@ const mutationTrips = new GraphQLObjectType({
           isEditing: args.isEditing,
           createdBy: "5db474847f4fcf269336d3de"
         });
+        console.log('newTrip!!!!')
         pubsub.publish('newTrip', trip);
         return trip.save();
       }
@@ -99,38 +95,26 @@ const mutationTrips = new GraphQLObjectType({
         return TripId;
       }
     },
-    toggleTrip: {
-      type: TripType,
-      args: {
-        id: {
-          type: new GraphQLNonNull(GraphQLString)
-        },
-        isConfirmed: {
-          type: new GraphQLNonNull(GraphQLBoolean)
-        }
-      },
-      resolve(parent, args) {
-        const id = args.id
-        const confirmed = args.isConfirmed;
-        // Trip.findOne( { _id:id }, function(err,obj) { 
-        //   pubsub.publish('toggleTrip', obj);
-        // } ).exec();
-
-        // const trip = Trip.findOneAndUpdate(id, { isConfirmed: confirmed }, {new: true}).exec();
-        // console.log(JSON.stringify(trip))
-        // pubsub.publish('toggleTrip', trip);
-        
-        Trip.findOneAndUpdate({_id: id}, {$set:{isConfirmed:confirmed}}, {new: true}, (err, doc) => {
-          if (err) {
-              console.log("Something wrong when updating data!");
-          }
-      
-          pubsub.publish('toggleTrip', doc);
-        });
-
-        return 
-      }
-    }
+    // toggleTrip: {
+    //   type: TripType,
+    //   args: {
+    //     id: {
+    //       type: new GraphQLNonNull(GraphQLString)
+    //     },
+    //     isConfirmed: {
+    //       type: new GraphQLNonNull(GraphQLBoolean)
+    //     }
+    //   },
+    //   resolve(parent, args) {
+    //     const id = args.id
+    //     const confirmed = args.isConfirmed;
+    //     Trip.findOne( { _id:id }, function(err,obj) { 
+    //       pubsub.publish('deleteTrip', obj);
+    //     } ).exec();
+    //     let TripId = Trip.findByIdAndUpdate(id, { isConfirmed: confirmed }).exec();
+    //     return TripId;
+    //   }
+    // }
   }
 });
 
