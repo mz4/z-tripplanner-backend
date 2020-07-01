@@ -50,10 +50,11 @@ export const createOne = model => async (req, res) => {
 
 export const updateOne = model => async (req, res) => {
   try {
+    console.log('UPDATE ONE TRIP', req.user._id, req.params.id)
+    console.log('UPDATE ONE TRIP BODY', req.body)
     const updatedDoc = await model
       .findOneAndUpdate(
         {
-          createdBy: req.user._id,
           _id: req.params.id
         },
         req.body,
@@ -62,6 +63,7 @@ export const updateOne = model => async (req, res) => {
       .lean()
       .exec()
 
+    console.log('updatedDoc: ', updatedDoc)
     if (!updatedDoc) {
       return res.status(400).end()
     }

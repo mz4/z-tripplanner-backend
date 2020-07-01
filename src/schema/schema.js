@@ -112,14 +112,6 @@ const mutationTrips = new GraphQLObjectType({
       resolve(parent, args) {
         const id = args.id
         const confirmed = args.isConfirmed;
-        // Trip.findOne( { _id:id }, function(err,obj) { 
-        //   pubsub.publish('toggleTrip', obj);
-        // } ).exec();
-
-        // const trip = Trip.findOneAndUpdate(id, { isConfirmed: confirmed }, {new: true}).exec();
-        // console.log(JSON.stringify(trip))
-        // pubsub.publish('toggleTrip', trip);
-        
         Trip.findOneAndUpdate({_id: id}, {$set:{isConfirmed:confirmed}}, {new: true}, (err, doc) => {
           if (err) {
               console.log("Something wrong when updating data!");
@@ -127,7 +119,6 @@ const mutationTrips = new GraphQLObjectType({
       
           pubsub.publish('toggleTrip', doc);
         });
-
         return 
       }
     }
