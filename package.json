@@ -18,11 +18,11 @@
   "dependencies": {
     "apollo-server": "^2.9.14",
     "bcrypt": "^3.0.2",
-    "body-parser": "^1.18.3",
+    "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "cuid": "^2.1.4",
     "dotenv": "^6.1.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-graphql": "^0.9.0",
     "graphql": "^14.5.8",
     "graphql-playground-middleware-express": "^1.7.12",
